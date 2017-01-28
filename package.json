@@ -1,0 +1,15 @@
+{
+  "name": "webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for creating webpack project",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "npm webpack.js"
+  },
+  "repository": {},
+  "author": "mangeg",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^2.2.0"
+  }
+}
