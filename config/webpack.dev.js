@@ -9,11 +9,19 @@ const AddAssetHtmlPlugin = require( "add-asset-html-webpack-plugin" );
 const DllBundlesPlugin = require( "webpack-dll-bundles-plugin" ).DllBundlesPlugin;
 const LoaderOptionsPlugin = webpack.LoaderOptionsPlugin;
 
-let isDevBuild = true;
-
 const ENV = process.env.ENV = process.env.NODE_ENV = "development";
+const HOST = process.env.HOST || "localhost";
+const PORT = process.env.PORT || 3000;
+const HMR = helpers.hasProcessFlag( "hot" );
+const METADATA = webpackMerge( commonConfig( { env: ENV }).metadata, {
+    host: HOST,
+    port: PORT,
+    ENV: ENV,
+    HMR: HMR,
+});
 
 let main = function ( options ) {
+    helpers.log( METADATA );
     let ret = webpackMerge( commonConfig( { env: ENV }), {
 
         devtool: "source-map-inline",
@@ -45,6 +53,16 @@ let main = function ( options ) {
             ],
         },
         plugins: [
+            new webpack.DefinePlugin( {
+                "ENV": JSON.stringify( METADATA.ENV ),
+                "HMR": METADATA.HMR,
+                "process.env": {
+                    "ENV": JSON.stringify( METADATA.ENV ),
+                    "NODE_ENV": JSON.stringify( METADATA.ENV ),
+                    "HMR": METADATA.HMR,
+                },
+            }),
+            new webpack.NamedModulesPlugin(),
             new DllBundlesPlugin( {
                 bundles: {
                     polyfills: [
@@ -63,6 +81,7 @@ let main = function ( options ) {
                         "@angular/platform-browser-dynamic",
                         "@angular/core",
                         "@angular/common",
+                        "@angularclass/hmr",
                         "rxjs",
                     ],
                 },
@@ -82,9 +101,19 @@ let main = function ( options ) {
                 { filepath: helpers.root( `dll/${DllBundlesPlugin.resolveFile( "vendor" )}` ) },
             ] ),
         ],
+        devServer: {
+            contentBase: helpers.root( "dist" ),
+            port: METADATA.port,
+            host: METADATA.host,
+            historyApiFallback: true,
+            hot: true,
+            watchOptions: {
+                aggregateTimeout: 300,
+                poll: 1000,
+            },
+        },
     });
     return ret;
 };
-
 
 module.exports = main;

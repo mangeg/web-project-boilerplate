@@ -6,6 +6,7 @@ const CheckerPlugin = require( "awesome-typescript-loader" ).CheckerPlugin;
 const HtmlWebpackPlugin = require( "html-webpack-plugin" );
 const ScriptExtHtmlWebpackPlugin = require( "script-ext-html-webpack-plugin" );
 
+const HMR = helpers.hasProcessFlag( "hot" );
 const METADATA = {
     title: "Angular 2 webpack boilerplate",
     baseUrl: "/",
@@ -13,29 +14,45 @@ const METADATA = {
 };
 
 module.exports = function ( options ) {
-    return {
+    isProd = options.env === "production";
+    const tsLoaders = ( HMR ?
+        [
+            {
+                loader: "@angularclass/hmr-loader",
+                options: {
+                    pretty: !isProd,
+                    prod: isProd,
+                },
+            },
+        ] : [] ).concat(
+        [
+            {
+                loader: "awesome-typescript-loader",
+            },
+            {
+                loader: "angular2-template-loader",
+            },
+        ] );
+
+    let ret = {
         entry: {
             "main": "./src/main.ts",
             "polyfills": "./src/polyfills.ts",
         },
         resolve: {
             extensions: [ ".ts", ".js" ],
-            modules: [ helpers.root( "src" ), helpers.root( "node_modules" ) ]
+            modules: [ helpers.root( "src" ), helpers.root( "node_modules" ) ],
         },
         module: {
             rules: [
                 {
                     test: /\.(ts)$/,
-                    use: [
-                        {
-                            loader: "awesome-typescript-loader",
-                        },
-                    ],
+                    use: tsLoaders,
                 },
                 {
                     test: /\.css$/,
                     use: [ "to-string-loader", "css-loader" ],
-                    exclude: [ helpers.root( "src", "styles" ) ]
+                    exclude: [ helpers.root( "src", "styles" ) ],
                 },
                 {
                     test: /\.scss$/,
@@ -45,11 +62,18 @@ module.exports = function ( options ) {
                 {
                     test: /\.html$/,
                     use: "raw-loader",
-                    exclude: [ helpers.root( "src/index.html" ) ]
+                    exclude: [ helpers.root( "src/index.html" ) ],
                 },
             ],
         },
         plugins: [
+            new HtmlWebpackPlugin( {
+                template: "src/index.html",
+                title: METADATA.title,
+                chunksSortMode: "dependency",
+                metadata: METADATA,
+                inject: "head",
+            }),
             new AssetsPlugin( {
                 path: helpers.root( "dist" ),
                 filename: "webpack-assets.json",
@@ -58,14 +82,6 @@ module.exports = function ( options ) {
             new webpack.ContextReplacementPlugin(
                 /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/, __dirname ),
             new CheckerPlugin(),
-            new HtmlWebpackPlugin( {
-                template: "src/index.html",
-                title: METADATA.title,
-                chunksSortMode: "dependency",
-                metadata: METADATA,
-                inject: "head",
-            }),
-
             new webpack.optimize.CommonsChunkPlugin( {
                 name: "polyfills",
                 chunks: [ "polyfills" ],
@@ -90,4 +106,6 @@ module.exports = function ( options ) {
             setImmediate: false,
         },
     };
+
+    return ret;
 };
