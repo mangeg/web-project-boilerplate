@@ -21,7 +21,6 @@ const METADATA = webpackMerge( commonConfig( { env: ENV }).metadata, {
 });
 
 let main = function ( options ) {
-    helpers.log( METADATA );
     let ret = webpackMerge( commonConfig( { env: ENV }), {
 
         devtool: "source-map-inline",
@@ -81,6 +80,9 @@ let main = function ( options ) {
                         "@angular/platform-browser-dynamic",
                         "@angular/core",
                         "@angular/common",
+                        "@angular/http",
+                        "@angular/forms",
+                        "@angular/router",
                         "@angularclass/hmr",
                         "rxjs",
                     ],
@@ -106,7 +108,6 @@ let main = function ( options ) {
             port: METADATA.port,
             host: METADATA.host,
             historyApiFallback: true,
-            hot: true,
             watchOptions: {
                 aggregateTimeout: 300,
                 poll: 1000,

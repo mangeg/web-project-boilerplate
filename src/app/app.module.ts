@@ -1,18 +1,19 @@
 import { ApplicationRef, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 
-import { bootloader, createInputTransfer, createNewHosts, removeNgStyles } from "@angularclass/hmr";
+import { createInputTransfer, createNewHosts, removeNgStyles } from "@angularclass/hmr";
 
 import { AppState, InternalStateType } from "./app.service";
 
 const APP_PROVIDERS = [
-    AppState
+    AppState,
 ];
 
 type StoreType = {
-    state: InternalStateType,
-    restoreInputValues: () => void,
-    disposeOldHosts: () => void
+    state: InternalStateType;
+    restoreInputValues: () => void;
+    disposeOldHosts: () => void;
 };
 
 import "../styles/headings.css";
@@ -20,13 +21,22 @@ import "../styles/styles.scss";
 
 import { ENV_PROVIDERS } from "./environment";
 
+import { AppRoutingModule } from "./app.routing";
+
 import { AppComponent } from "./app.component";
-import { TextComponent } from "./text/text.component";
+
+import { Area51Module } from "./areas/area51";
 
 @NgModule( {
     bootstrap: [ AppComponent ],
-    declarations: [ AppComponent, TextComponent ],
-    imports: [ BrowserModule ],
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        Area51Module,
+        AppRoutingModule,
+    ],
     providers: [
         APP_PROVIDERS,
         ENV_PROVIDERS,
@@ -34,7 +44,9 @@ import { TextComponent } from "./text/text.component";
 })
 export class AppModule {
     constructor(
-        public appRef: ApplicationRef ) {
+        public appRef: ApplicationRef,
+        private router: Router ) {
+        // console.log( 'Routes: ', JSON.stringify( router.config, undefined, 2 ) );
     }
 
     public hmrOnInit( store: StoreType ) {

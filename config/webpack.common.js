@@ -15,24 +15,30 @@ const METADATA = {
 
 module.exports = function ( options ) {
     isProd = options.env === "production";
-    const tsLoaders = ( HMR ?
-        [
-            {
-                loader: "@angularclass/hmr-loader",
-                options: {
-                    pretty: !isProd,
-                    prod: isProd,
-                },
+    let tsLoaders = [
+        {
+            loader: "awesome-typescript-loader",
+        },
+        {
+            loader: "angular2-template-loader",
+        },
+    ];
+    if ( true ) {
+        tsLoaders.unshift( {
+            loader: "@angularclass/hmr-loader",
+            options: {
+                pretty: !isProd,
+                prod: isProd,
             },
-        ] : [] ).concat(
-        [
+        });
+    }
+    if ( isProd ) {
+        tsLoaders.unshift(
             {
-                loader: "awesome-typescript-loader",
-            },
-            {
-                loader: "angular2-template-loader",
-            },
-        ] );
+                loader: "babel-loader",
+            }
+        );
+    }
 
     let ret = {
         entry: {

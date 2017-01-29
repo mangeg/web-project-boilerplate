@@ -37,13 +37,21 @@
             true,
             "double"
         ],
-        "no-empty": false
+        "trailing-comma": [
+            false            
+        ],
+        "no-empty": false,
+        "object-literal-sort-keys": false
     },
     "jsRules": {
         "quotemark": [
             true,
             "double"
         ],
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "no-empty": false,
+        "trailing-comma": [
+            false
+        ]
     }
 }
