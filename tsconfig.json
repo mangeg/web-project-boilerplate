@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "es2015",
+        "module": "es2015",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "noEmit": true,
+        "noEmitHelpers": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "lib": [
+            "dom",
+            "es2015"
+        ]
+    },
+    "exclude": [
+        "bin",
+        "node_modules",
+        "dist"
+    ],
+    "awesomeTypescriptLoaderOptions": {
+        "forkChecker": true,
+        "useWebpackText": true
+    }
+}

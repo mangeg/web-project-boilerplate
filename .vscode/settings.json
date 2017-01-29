@@ -1,5 +1,5 @@
 {
     "vsicons.presets.angular": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "tslint.jsEnable": true
 }

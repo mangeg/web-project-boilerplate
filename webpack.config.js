@@ -1,11 +1,15 @@
-let path = require( "path" );
 
-let main = {
-    entry: path.join( __dirname, "app/main.js" ),
-    output: {
-        path: path.resolve( __dirname, "dist" ),
-        filename: "main-bundle.js"
-    }
+switch ( process.env.NODE_ENV ) {
+    case "prod":
+    case "production":
+        module.exports = require( "./config/webpack.prod" )( { env: "production" });
+        break;
+    case "test":
+    case "testing":
+        module.exports = require( "./config/webpack.test" )( { env: "test" });
+        break;
+    case "dev":
+    case "development":
+    default:
+        module.exports = require( "./config/webpack.dev" )( { env: "development" });
 }
-
-module.exports = [ main ];
