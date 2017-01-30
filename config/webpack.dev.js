@@ -23,8 +23,11 @@ const METADATA = webpackMerge( commonConfig( { env: ENV }).metadata, {
 let main = function ( options ) {
     let ret = webpackMerge( commonConfig( { env: ENV }), {
 
-        devtool: "source-map-inline",
+        devtool: "inline-source-map",
 
+        entry: {
+
+        },
         output: {
             path: helpers.root( "dist" ),
             filename: "[name].bundle.js",
@@ -41,12 +44,12 @@ let main = function ( options ) {
                 },
                 {
                     test: /\.css$/,
-                    use: [ "style-loader", "css-loader" ],
+                    use: [ "style-loader", "css-loader?souceMap" ],
                     include: [ helpers.root( "src", "styles" ) ],
                 },
                 {
                     test: /\.scss$/,
-                    use: [ "style-loader", "css-loader", "sass-loader" ],
+                    use: [ "style-loader", "css-loader?souceMap", "sass-loader?souceMap" ],
                     include: [ helpers.root( "src", "styles" ) ],
                 },
             ],
@@ -83,7 +86,9 @@ let main = function ( options ) {
                         "@angular/http",
                         "@angular/forms",
                         "@angular/router",
+                        "@angular/material",
                         "@angularclass/hmr",
+                        "hammerjs",
                         "rxjs",
                     ],
                 },
@@ -96,7 +101,9 @@ let main = function ( options ) {
             new LoaderOptionsPlugin( {
                 debug: true,
                 options: {
-                },
+                    context: __dirname,
+                    output: { path: "./" },
+                }
             }),
             new AddAssetHtmlPlugin( [
                 { filepath: helpers.root( `dll/${DllBundlesPlugin.resolveFile( "polyfills" )}` ) },

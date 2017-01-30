@@ -44,6 +44,9 @@ module.exports = function ( options ) {
         entry: {
             "main": "./src/main.ts",
             "polyfills": "./src/polyfills.ts",
+            "vendor": [
+                "@angular/material/core/theming/prebuilt/deeppurple-amber.scss"
+            ]
         },
         resolve: {
             extensions: [ ".ts", ".js" ],
@@ -57,18 +60,22 @@ module.exports = function ( options ) {
                 },
                 {
                     test: /\.css$/,
-                    use: [ "to-string-loader", "css-loader" ],
+                    use: [ "style-loader", "css-loader?souceMap" ],
                     exclude: [ helpers.root( "src", "styles" ) ],
                 },
                 {
                     test: /\.scss$/,
-                    use: [ "to-string-loader", "css-loader", "sass-loader" ],
+                    use: [ "style-loader", "css-loader?souceMap", "sass-loader?souceMap" ],
                     exclude: [ helpers.root( "src", "styles" ) ],
                 },
                 {
                     test: /\.html$/,
                     use: "raw-loader",
                     exclude: [ helpers.root( "src/index.html" ) ],
+                },
+                {
+                    test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/,
+                    use: "url-loader?limit=100000"
                 },
             ],
         },

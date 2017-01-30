@@ -2,6 +2,8 @@ import { ApplicationRef, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
+import { MaterialModule, MdInputDirective } from "@angular/material";
+
 import { createInputTransfer, createNewHosts, removeNgStyles } from "@angularclass/hmr";
 
 import { AppState, InternalStateType } from "./app.service";
@@ -16,14 +18,16 @@ type StoreType = {
     disposeOldHosts: () => void;
 };
 
+import "hammerjs";
 import "../styles/headings.css";
 import "../styles/styles.scss";
 
+// import "style-loader!@angular/material/core/theming/prebuilt/deeppurple-amber.css";
+
 import { ENV_PROVIDERS } from "./environment";
 
-import { AppRoutingModule } from "./app.routing";
-
 import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app.routing";
 
 import { Area51Module } from "./areas/area51";
 
@@ -34,6 +38,7 @@ import { Area51Module } from "./areas/area51";
     ],
     imports: [
         BrowserModule,
+        MaterialModule.forRoot(),
         Area51Module,
         AppRoutingModule,
     ],
