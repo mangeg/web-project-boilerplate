@@ -1,8 +1,8 @@
 require( "ts-node" ).register({
-    "project": "./configts/tsconfig.json",
+    "project": "./configts/tsconfig2.json",
     "no-cache": true,
     "fast": true
 });
 
-let config = require( "./configts/webpack.ts" );
+let config = require( "./webpack.ts" );
 module.exports = config;

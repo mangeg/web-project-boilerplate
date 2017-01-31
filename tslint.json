@@ -41,7 +41,10 @@
             false            
         ],
         "no-empty": false,
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "no-console": [
+            
+        ]
     },
     "jsRules": {
         "quotemark": [
