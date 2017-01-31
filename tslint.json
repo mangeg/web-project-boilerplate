@@ -42,9 +42,9 @@
         ],
         "no-empty": false,
         "object-literal-sort-keys": false,
-        "no-console": [
-            
-        ]
+        "no-console": [            
+        ],
+        "no-var-requires": false
     },
     "jsRules": {
         "quotemark": [

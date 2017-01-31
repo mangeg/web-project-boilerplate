@@ -2,12 +2,12 @@ import * as webpack from "webpack";
 import { Configuration } from "webpack";
 import * as webpackMerge from "webpack-merge";
 
-
 const webpackMergeDll = webpackMerge.strategy( { plugins: "replace" });
-import { DllBundlesPlugin } from "webpack-dll-bundles-plugin";
+// tslint:disable-next-line:no-var-requires
 const AddAssetHtmlPlugin = require( "add-asset-html-webpack-plugin" );
+import { DllBundlesPlugin } from "webpack-dll-bundles-plugin";
 
-import { log, root, IEnvironment } from "./helpers";
+import { IEnvironment, log, root } from "./helpers";
 import { exportFunc } from "./webpack.common";
 
 export default function createConfig( env: IEnvironment ) {
@@ -15,7 +15,7 @@ export default function createConfig( env: IEnvironment ) {
     let commonConfig = exportFunc( env );
     let commonConfigDll = exportFunc( env );
 
-    // Create dev specific config    
+    // Create dev specific config
     let localConfig: Configuration = {
         devtool: "source-map",
         output: {
@@ -62,6 +62,14 @@ export default function createConfig( env: IEnvironment ) {
                 }),
             }),
 
+            new webpack.LoaderOptionsPlugin( {
+                debug: true,
+                options: {
+                    context: __dirname,
+                    output: { path: "./" },
+                }
+            }),
+
             new AddAssetHtmlPlugin( [
                 { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "polyfills" )}` ) },
                 { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "vendor" )}` ) },
@@ -80,7 +88,7 @@ export default function createConfig( env: IEnvironment ) {
         },
     };
 
-    // Merge the configs    
+    // Merge the configs
     let mergedConfig = webpackMerge( commonConfig, localConfig );
 
     // log( mergedConfig, false, 3 );
