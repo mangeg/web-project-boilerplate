@@ -3,9 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { HomeComponent } from "./home";
 
-const routes: Routes = [    
+const routes: Routes = [
     { path: "home", component: HomeComponent },
-    { path: "", pathMatch: "full", component: HomeComponent  },
+    { path: "", pathMatch: "full", component: HomeComponent },
     { path: "**", redirectTo: "/home" }
 ];
 
