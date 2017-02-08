@@ -18,8 +18,8 @@ type StoreType = {
     disposeOldHosts: () => void;
 };
 
+require( "normalize.css" );
 import "hammerjs";
-import "../styles/headings.css";
 import "../styles/styles.scss";
 
 // import "style-loader!@angular/material/core/theming/prebuilt/deeppurple-amber.css";

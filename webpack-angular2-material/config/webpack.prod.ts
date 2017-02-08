@@ -13,7 +13,7 @@ export default function createConfig( env: IEnvironment ) {
 
     // Create dev specific config
     let localConfig: Configuration = {
-        devtool: "source-map",
+        devtool: false,
 
         output: {
             path: root( "dist" ),
@@ -65,25 +65,11 @@ export default function createConfig( env: IEnvironment ) {
                 //   unused: false
                 // }, // debug
                 // comments: true, //debug
-                comments: false,
-                beautify: false, // prod
+                comments: true,
+                beautify: true, // prod
                 // prod
-                mangle: {
-                    screw_ie8: true,
-                }, // prod
-                compress: {
-                    screw_ie8: true,
-                    warnings: false,
-                    conditionals: true,
-                    unused: true,
-                    comparisons: true,
-                    sequences: true,
-                    dead_code: true,
-                    evaluate: true,
-                    if_return: true,
-                    join_vars: true,
-                    negate_iife: false,
-                },
+                mangle: false, // prod
+                compress: false,
             }),
 
             new webpack.NormalModuleReplacementPlugin(

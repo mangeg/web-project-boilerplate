@@ -50,16 +50,13 @@ export function exportFunc( env: IEnvironment ) {
         );
     }
     const cssLoadersExtra = env.PROD ?
-        "?sourceMap" : "?sourceMap";
+        "" : "?sourceMap";
 
     let configLocal: Configuration = {
         // main entry
         entry: {
             main: "./src/main.ts",
             polyfills: "./src/polyfills.ts",
-            vendor: [
-                "@angular/material/core/theming/prebuilt/deeppurple-amber.scss"
-            ]
         },
 
         // output
@@ -76,27 +73,9 @@ export function exportFunc( env: IEnvironment ) {
             rules: [
                 {
                     test: /\.ts$/,
-                    use: TSLOADERS
+                    use: TSLOADERS,
+                    exclude: root( "config" )
                 },
-                /*
-                    {
-                        test: /\.css$/,
-                        use: [
-                            "style-loader",
-                            "css-loader" + cssLoadersExtra
-                        ]
-                    },
-                */
-                /*
-                {
-                    test: /\.scss$/,
-                    use: [
-                        "style-loader",
-                        "css-loader" + cssLoadersExtra,
-                        "sass-loader" + cssLoadersExtra
-                    ]
-                },
-                */
                 {
                     test: /\.html$/,
                     use: "raw-loader",
@@ -105,15 +84,15 @@ export function exportFunc( env: IEnvironment ) {
                 {
                     test: /\.css$/,
                     loader: cssExtract.extract( {
-                        fallbackLoader: "style-loader",
-                        loader: "css-loader" + cssLoadersExtra
+                        fallback: "style-loader",
+                        use: "css-loader" + cssLoadersExtra
                     }),
                 },
                 {
                     test: /\.scss$/,
                     loader: cssExtract.extract( {
-                        fallbackLoader: "style-loader",
-                        loader: "css-loader" + cssLoadersExtra + "!sass-loader" + cssLoadersExtra
+                        fallback: "style-loader",
+                        use: "css-loader" + cssLoadersExtra + "!sass-loader" + cssLoadersExtra
                     }),
                 }
             ]
@@ -122,9 +101,12 @@ export function exportFunc( env: IEnvironment ) {
         plugins: [
             cssExtract,
             new CheckerPlugin(),
+
+            new webpack.NamedModulesPlugin(),
+
             new webpack.ContextReplacementPlugin(
                 /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/, __dirname ),
-            new webpack.NamedModulesPlugin(),
+
             new webpack.DefinePlugin( {
                 "ENV": JSON.stringify( env.ENV ),
                 "HMR": env.HOT,
@@ -132,8 +114,9 @@ export function exportFunc( env: IEnvironment ) {
                     ENV: JSON.stringify( process.env.ENV = process.env.NODE_ENV = env.ENV ),
                     NODE_ENV: JSON.stringify( process.env.ENV = process.env.NODE_ENV = env.ENV ),
                     HMR: env.HOT,
-                },
+                }
             }),
+
             new HtmlWebpackPlugin( {
                 template: "src/index.html",
                 title: "some title",
@@ -143,10 +126,12 @@ export function exportFunc( env: IEnvironment ) {
                     baseUrl: "/"
                 }
             }),
+
             new webpack.optimize.CommonsChunkPlugin( {
                 name: "polyfills",
                 chunks: [ "polyfills" ],
             }),
+
             new webpack.optimize.CommonsChunkPlugin( {
                 name: "vendor",
                 chunks: [ "main" ],
@@ -154,8 +139,9 @@ export function exportFunc( env: IEnvironment ) {
                     return /node_modules/.test( module.resource );
                 },
             }),
+
             new webpack.optimize.CommonsChunkPlugin( {
-                name: [ "polyfills", "vendor" ].reverse(),
+                name: [ "polyfills", "vendor" ]
             })
         ],
 

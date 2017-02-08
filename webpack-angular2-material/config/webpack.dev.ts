@@ -53,7 +53,7 @@ export default function createConfig( env: IEnvironment ) {
                         "@angularclass/hmr",
                         "hammerjs",
                         "rxjs",
-                    ],
+                    ]
                 },
                 dllDir: root( "dll" ),
                 webpackConfig: webpackMergeDll( commonConfigDll, {
@@ -72,7 +72,7 @@ export default function createConfig( env: IEnvironment ) {
 
             new AddAssetHtmlPlugin( [
                 { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "polyfills" )}` ) },
-                { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "vendor" )}` ) },
+                { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "vendor" )}` ) }
             ] ),
         ],
 
@@ -91,7 +91,7 @@ export default function createConfig( env: IEnvironment ) {
     // Merge the configs
     let mergedConfig = webpackMerge( commonConfig, localConfig );
 
-    // log( mergedConfig, false, 3 );
+    // log( mergedConfig, false, 5 );
 
     return mergedConfig;
 };

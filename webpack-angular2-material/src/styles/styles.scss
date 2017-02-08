@@ -1,9 +1,14 @@
 @import "variables";
 
+@import "~@angular/material/core/theming/prebuilt/deeppurple-amber";
+
 html {
     font-family: 'Roboto', sans-serif;
 }
-body {
-    
+body {    
     background-color: $var-color; 
+}
+
+h1 {
+  color: #00BCD4;
 }
