@@ -2,6 +2,9 @@ import { ApplicationRef, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
+import { NgReduxRouterModule } from "@angular-redux/router";
+import { NgReduxModule } from "@angular-redux/store";
+
 import { MaterialModule, MdInputDirective } from "@angular/material";
 
 import { createInputTransfer, createNewHosts, removeNgStyles } from "@angularclass/hmr";
@@ -39,6 +42,8 @@ import { Area51Module } from "./areas/area51";
     imports: [
         BrowserModule,
         MaterialModule.forRoot(),
+        NgReduxModule,
+        NgReduxRouterModule,
         Area51Module,
         AppRoutingModule,
     ],

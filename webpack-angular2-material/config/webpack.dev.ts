@@ -51,6 +51,9 @@ export default function createConfig( env: IEnvironment ) {
                         "@angular/router",
                         "@angular/material",
                         "@angularclass/hmr",
+                        "@angular-redux/router",
+                        "@angular-redux/store",
+                        "redux",
                         "hammerjs",
                         "rxjs",
                     ]
