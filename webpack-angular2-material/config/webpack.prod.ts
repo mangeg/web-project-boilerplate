@@ -65,11 +65,11 @@ export default function createConfig( env: IEnvironment ) {
                 //   unused: false
                 // }, // debug
                 // comments: true, //debug
-                comments: true,
-                beautify: true, // prod
+                comments: false,
+                beautify: false, // prod
                 // prod
-                mangle: false, // prod
-                compress: false,
+                mangle: true, // prod
+                compress: true,
             }),
 
             new webpack.NormalModuleReplacementPlugin(

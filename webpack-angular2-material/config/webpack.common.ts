@@ -121,10 +121,7 @@ export function exportFunc( env: IEnvironment ) {
                 template: "src/index.html",
                 title: "some title",
                 chunksSortMode: "dependency",
-                inject: "head",
-                metadata: {
-                    baseUrl: "/"
-                }
+                inject: "head"
             }),
 
             new webpack.optimize.CommonsChunkPlugin( {

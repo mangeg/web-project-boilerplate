@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { NgReduxRouterModule } from "@angular-redux/router";
 import { NgReduxModule } from "@angular-redux/store";
 
-import { MaterialModule, MdInputDirective } from "@angular/material";
+import { MaterialModule } from "@angular/material";
 
 import { createInputTransfer, createNewHosts, removeNgStyles } from "@angularclass/hmr";
 
