@@ -11,7 +11,7 @@ const environment: IEnvironment = {
     ENV: process.env.ENV = process.env.NODE_ENV
 };
 
-log( { env: environment });
+log( { env: environment } );
 
 let funcToExport: ( env?: any ) => any;
 

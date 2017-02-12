@@ -2,7 +2,7 @@ import * as webpack from "webpack";
 import { Configuration } from "webpack";
 import * as webpackMerge from "webpack-merge";
 
-const webpackMergeDll = webpackMerge.strategy( { plugins: "replace" });
+const webpackMergeDll = webpackMerge.strategy( { plugins: "replace" } );
 // tslint:disable-next-line:no-var-requires
 const AddAssetHtmlPlugin = require( "add-asset-html-webpack-plugin" );
 import { DllBundlesPlugin } from "webpack-dll-bundles-plugin";
@@ -62,8 +62,8 @@ export default function createConfig( env: IEnvironment ) {
                 webpackConfig: webpackMergeDll( commonConfigDll, {
                     devtool: "cheap-module-source-map",
                     plugins: [],
-                }),
-            }),
+                } ),
+            } ),
 
             new webpack.LoaderOptionsPlugin( {
                 debug: true,
@@ -71,7 +71,7 @@ export default function createConfig( env: IEnvironment ) {
                     context: __dirname,
                     output: { path: "./" },
                 }
-            }),
+            } ),
 
             new AddAssetHtmlPlugin( [
                 { filepath: root( `dll/${DllBundlesPlugin.resolveFile( "polyfills" )}` ) },

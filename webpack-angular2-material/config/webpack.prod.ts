@@ -49,7 +49,7 @@ export default function createConfig( env: IEnvironment ) {
         plugins: [
             new OptimizeJsPlugin( {
                 sourceMap: false,
-            }),
+            } ),
 
             new webpack.optimize.UglifyJsPlugin( {
                 // beautify: true, //debug
@@ -65,12 +65,26 @@ export default function createConfig( env: IEnvironment ) {
                 //   unused: false
                 // }, // debug
                 // comments: true, //debug
-                comments: false,
+
                 beautify: false, // prod
-                // prod
-                mangle: true, // prod
-                compress: true,
-            }),
+
+                mangle: {
+                    screw_ie8: true
+                }, // prod
+                compress: {
+                    screw_ie8: true,
+                    warnings: false,
+                    conditionals: true,
+                    unused: true,
+                    comparisons: true,
+                    sequences: true,
+                    dead_code: true,
+                    evaluate: true,
+                    if_return: true,
+                    join_vars: true,
+                    negate_iife: false // we need this for lazy v8
+                },
+            } ),
 
             new webpack.NormalModuleReplacementPlugin(
                 /angular2-hmr/,
@@ -107,7 +121,7 @@ export default function createConfig( env: IEnvironment ) {
                         customAttrAssign: [ /\)?\]?=/ ],
                     },
                 }
-            }),
+            } ),
         ]
     };
 
